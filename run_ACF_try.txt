@@ -1,0 +1,38 @@
+#!/bin/bash
+# Job name:
+# Note: Only the first 8 characters show up when typing 'squeue' to get a list of running jobs
+#SBATCH --job-name=Runzx88
+#
+# Request one node:
+#SBATCH --nodes=1
+#
+# Specify number of tasks for use case (example):
+#SBATCH --ntasks-per-node=1
+#
+# Processors per task: 
+#SBATCH --cpus-per-task=1
+#
+# Memory limit. Default is 4GB
+#SBATCH --mem=4G
+#
+# Wall clock limit. Default is 1 hour. Format is HH:MM:SS, or DD-HH:MM:SS where DD is the number of days.
+#SBATCH --time=5-00:00:00
+## This will write the output to a one file per array id. Make sure the directory exists!
+#SBATCH --output=logs/%a.out
+## This will write any error msgs
+#SBATCH --error=logs/%a.err
+## Total Number of Tasks?
+#SBATCH --ntasks=1
+## Adjust the range of the array you probably want this to be the total number of firms, but try it with a few.
+#SBATCH --array=1-5
+#
+# Email?
+#DONOTSBATCH --mail-user=zx88@cornell.edu
+#SBATCH --mail-type=ALL
+#
+# Create a task-specific directory (where does it create)
+[[ -d task${SLURM_ARRAY_TASK_ID} ]] || mkdir task${SLURM_ARRAY_TASK_ID}
+# Enter that directory
+cd task${SLURM_ARRAY_TASK_ID}
+# Run the job with stata-se (single-threaded) passing the argument for the particular job
+/usr/local/stata18/stata-se -b /home/zx88/Documents/master_ACF_try.do "${SLURM_ARRAY_TASK_ID}"
