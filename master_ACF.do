@@ -22,7 +22,8 @@
 global SERVER_ANALYSIS_DATA = "/home/zx88/Documents/server_sector_data"
 global SERVER_POSTEST_DATA = "/home/zx88/Documents/server_postest_sector_data"
 
- 
+adopath + "/home/zx88/Documents/ado"
+
 
 *local total_runs = 1720
 
@@ -30,11 +31,11 @@ local run_num = "`1'"
 
  
 
-local   sec_num    =   mod(`run_num' − 1, 86) + 1
-local   seed_num   =   floor((`run_num' − 1)/86) + 1
+local   sec_num    =   mod(`run_num' - 1, 86) + 1
+local   seed_num   =   floor((`run_num' - 1)/86) + 1
 
    
-use  "$SERVER_ANALYSIS_DATA/superslim_`sec_num'.dta", clear
+use  "$SERVER_ANALYSIS_DATA/superslim_server_`sec_num'.dta", clear
 
  set seed `seed_num'
 
